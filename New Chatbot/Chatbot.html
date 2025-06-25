@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+</head>
+<body>
+    <h1>Chat with Our Bot</h1>
+    <div>
+        <label for="user_input">You:</label>
+        <input type="text" id="user_input" name="user_input">
+        <button onclick="getResponse()">Send</button>
+    </div>
+    <div>
+        <h3>Bot:</h3>
+        <p id="response"></p>
+    </div>
+
+    <script>
+        function getResponse() {
+            const user_input = document.getElementById('user_input').value;
+            fetch('http://localhost:8000/get_response', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `user_input=${user_input}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').innerText = data;
+            });
+        }
+    </script>
+</body>
+</html>
